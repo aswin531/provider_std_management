@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_management/presentation/screens/addstudent.dart';
 import 'package:student_management/utils/colors.dart';
 import 'package:student_management/utils/styles.dart';
 
@@ -21,8 +22,7 @@ class SearchBarScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.7,
                 // height: MediaQuery.of(context).size.height * 0.1,
                 child: TextFormField(
-                  onChanged: (value) {
-                  },
+                  onChanged: (value) {},
                   decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.search),
                       hintText: "Search...",
@@ -33,6 +33,9 @@ class SearchBarScreen extends StatelessWidget {
               ),
               FloatingActionButton(
                 onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AddStudentScreen(),
+                  ));
                 },
                 focusColor: Colors.amber,
                 backgroundColor: primaryColor,

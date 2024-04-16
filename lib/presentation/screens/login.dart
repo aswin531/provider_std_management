@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_management/presentation/screens/homescreen.dart';
 import 'package:student_management/presentation/widgets/loginbutton.dart';
 import 'package:student_management/presentation/widgets/textformfield.dart';
 
@@ -25,6 +26,7 @@ class LoginScreen extends StatelessWidget {
             key: _formKey,
             child: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -57,7 +59,13 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  const LoginButton()
+                  LoginButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) =>const HomeScreen(),
+                      ));
+                    },
+                  )
                 ],
               ),
             ),

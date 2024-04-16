@@ -1,10 +1,11 @@
-// ignore_for_file: use_build_context_synchronously
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_management/models/studentmodel.dart';
 import 'package:student_management/presentation/controllers/providercontroller.dart';
+import 'package:student_management/presentation/widgets/savebutton.dart';
 import 'package:student_management/presentation/widgets/textformfield.dart';
+import 'package:student_management/utils/colors.dart';
+import 'package:student_management/utils/styles.dart';
 
 class AddStudentScreen extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
@@ -13,8 +14,6 @@ class AddStudentScreen extends StatelessWidget {
   final TextEditingController _addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   AddStudentScreen({super.key});
-    final student = Provider.of<StudentProvider>(context as BuildContext);
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +22,23 @@ class AddStudentScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: white,
+          title: Text(
+            "Add Student ",
+            style: TextStyles.heading,
+          ),
+        ),
         body: SingleChildScrollView(
           child: Form(
               key: _formKey,
               child: Center(
                 child: Column(
                   children: [
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 300,
+                    ),
                     // GestureDetector(
                     //   onTap: () => _getImage(context),
                     //   child: Consumer<ImageProvider>(
@@ -108,6 +118,11 @@ class AddStudentScreen extends StatelessWidget {
                         },
                       ),
                     ),
+                    SaveButton(
+                        onPressed: () {
+                          _addStudent(context);
+                        },
+                        text: "Save")
                   ],
                 ),
               )),
@@ -115,4 +130,39 @@ class AddStudentScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _addStudent(BuildContext context) {
+    final String name = _nameController.text;
+    final String age = _ageController.text;
+    final String phone = _phoneController.text;
+    final String address = _addressController.text;
+
+    if (name.isNotEmpty &&
+        age.isNotEmpty &&
+        phone.isNotEmpty &&
+        address.isNotEmpty) {
+      final Student newStudent = Student(
+          name: name, age: age, phone: phone, address: address, imagePath: '');
+      Provider.of<StudentProvider>(context, listen: false)
+          .addStudent(newStudent);
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill all fields'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  // @override
+  // void dispose() {
+  //   _nameController.dispose();
+  //   _ageController.dispose();
+  //   _phoneController.dispose();
+  //   _addressController.dispose();
+  //       super.dispose();
+
+  // }
 }

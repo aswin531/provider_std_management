@@ -12,12 +12,12 @@ class Student {
   @HiveField(3)
   late String address;
   @HiveField(4)
-  late String imagePath;
+  late String? imagePath;
 
   Student(
       {required this.name,
       required this.age,
       required this.phone,
       required this.address,
-      required this.imagePath});
+       this.imagePath});
 }

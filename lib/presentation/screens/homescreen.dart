@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:student_management/presentation/screens/addstudent.dart';
+import 'package:student_management/presentation/screens/displayscreen.dart';
 import 'package:student_management/presentation/widgets/searchbar.dart';
-import 'package:student_management/utils/styles.dart';
-
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: const Scaffold(
+        body: SafeArea(
           child: Column(
-        children: [
-          const SearchBarScreen(),
-          Text(
-            "Student List",
-            style: TextStyles.heading,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SearchBarScreen(),
+              // Text(
+              //   "Student List",
+              //   style: TextStyles.heading,
+              // ),
+              Expanded(
+                child: DetailedScreen(),
+              )
+            ],
           ),
-          AddStudentScreen()
-          
-        ],
-      )),
+        ),
+      ),
     );
   }
 }
